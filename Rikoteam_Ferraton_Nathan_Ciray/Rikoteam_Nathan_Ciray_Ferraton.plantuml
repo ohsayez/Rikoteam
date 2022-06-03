@@ -1,0 +1,113 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+enum Direction << enumeration >> {
+  + Direction(): 
+  + values(): Direction[]
+  + valueOf(String): Direction
+}
+enum Icon << enumeration >> {
+  + Icon(): 
+  + values(): Icon[]
+  + valueOf(String): Icon
+}
+entity Keys << record >> {
+  + Keys(MainBoard): 
+  + keyTyped(KeyEvent): void
+  + keyPressed(KeyEvent): void
+  + keyReleased(KeyEvent): void
+  + mainBoard(): MainBoard
+}
+class Main {
+  + Main(): 
+  + clock(): void
+  + main(String[]): void
+}
+class MainBoard {
+  + MainBoard(): 
+  + points: Point[]
+  + movesNumber: int
+  + height: int
+  + pointRobot: Robot
+  + usedRobot: Robot
+  + width: int
+  + robots: Robot[]
+  + movesTotal: int
+  + curPoint: Point
+  + setTimeInt(int, int): void
+  + createBoard(int): void
+  + createWalls(Direction, int, int): void
+  + createIconChooser(): void
+  + moveRobot(Robot, Direction): void
+  + createFirstWalls(): void
+  + orderOfPassage(): void
+  + createRobots(): void
+  + setPoint(): void
+  + reset(): void
+  + toString(): String
+  + getPosition(int, int): Position
+  + addMoves(): void
+  + setFirstPositions(): void
+  + timeString: String
+  + height: int
+  + curPoint: Point
+  + width: int
+  + robots: Robot[]
+  + pointRobot: Robot
+  + points: Point[]
+  + usedRobot: Robot
+  + movesTotal: int
+  + movesNumber: int
+}
+class Pane {
+  + Pane(MainBoard): 
+  + paintComponent(Graphics): void
+  + doPlay(): void
+  + drawRobot(Graphics, Color, int, int): void
+}
+class Point {
+  + Point(Position): 
+  + Point(Color, Icon, Position): 
+  + position: Position
+  + position: Position
+}
+class Position {
+  + Position(int, int): 
+  + Position(): 
+  + Y: int
+  + X: int
+  + isTouching: boolean
+  + createWall(Direction): void
+  + touching(): void
+  + detectWall(Direction): boolean
+  + notTouching(): void
+  + X: int
+  + isTouching: boolean
+  + Y: int
+}
+class Robot {
+  + Robot(Position): 
+  + Robot(Color, Position): 
+  + livePosition: Position
+  + livePosition: Position
+}
+
+Keys      "1" *-[#595959,plain]-> "mainBoard\n1" MainBoard 
+Main       -[#595959,dashed]->  Keys      : "«create»"
+Main      "1" *-[#595959,plain]-> "mainBoard\n1" MainBoard 
+Main       -[#595959,dashed]->  MainBoard : "«create»"
+Main       -[#595959,dashed]->  Pane      : "«create»"
+MainBoard  -[#595959,dashed]->  Point     : "«create»"
+MainBoard "1" *-[#595959,plain]-> "points\n*" Point     
+MainBoard "1" *-[#595959,plain]-> "board\n*" Position  
+MainBoard  -[#595959,dashed]->  Position  : "«create»"
+MainBoard  -[#595959,dashed]->  Robot     : "«create»"
+MainBoard "1" *-[#595959,plain]-> "robots\n*" Robot     
+Pane      "1" *-[#595959,plain]-> "mainBoard\n1" MainBoard 
+Point     "1" *-[#595959,plain]-> "icon\n1" Icon      
+Point     "1" *-[#595959,plain]-> "position\n1" Position  
+Robot     "1" *-[#595959,plain]-> "livePosition\n1" Position  
+@enduml
